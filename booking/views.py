@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .forms import AppointmentForm, CustomerForm
 from .models import Appointment, Customer
 
+
 def book_appointment(request):
     if request.method == "POST":
         customer_form = CustomerForm(request.POST)
@@ -16,12 +17,12 @@ def book_appointment(request):
         customer_form = CustomerForm()
         appointment_form = AppointmentForm()
 
-    return render(request, 'booking/book_appointment.html', {
+    return render(request, 'book_appointment.html', {
         'customer_form': customer_form,
         'appointment_form': appointment_form
     })
 
-def appointment_success(request):
-    return render(request, 'booking/appointment_success.html')
 
-# Create your views here.
+def appointment_success(request):
+    appointments = Appointment.objects.all()
+    return render(request, 'appointment_success.html', {"appointments": appointments})
